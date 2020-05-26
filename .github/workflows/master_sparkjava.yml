@@ -29,4 +29,4 @@ jobs:
         app-name: 'sparkjava'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_9572f9b91c86492793a36ece15f45b2f }}
-        package: '${{ github.workspace }}/target/*.war'
+        package: '${{ github.workspace }}/target/*.jar'
