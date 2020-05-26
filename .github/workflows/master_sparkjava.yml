@@ -1,11 +1,21 @@
+name: Build and deploy JAR app to Azure Web App - sparkjava
+
+on:
+  push:
+    branches:
+      - master
+
 trigger:
 - master
 
 pool:
   vmImage: 'Ubuntu-16.04'
 
-steps:
-- task: Maven@3
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml'
     mavenOptions: '-Xmx3072m'
@@ -14,13 +24,13 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: false   
     goals: 'package'
-
-- task: CopyFiles@2
+    
+    - task: CopyFiles@2
   inputs:
     contents: '**/*.war'
     targetFolder: '$(build.artifactStagingDirectory)'
 
-- task: PublishBuildArtifacts@1
+    - task: PublishBuildArtifacts@1
   inputs:
     artifactName: 'war'
     pathToPublish: '$(build.artifactStagingDirectory)'
