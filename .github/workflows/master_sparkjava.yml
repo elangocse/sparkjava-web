@@ -23,15 +23,9 @@ jobs:
     - name: Build with Maven
       run: mvn clean install
 
-    - name: Deploy to Azure Web App
-      uses: azure/webapps-deploy@v1
+    - uses: azure/webapps-deploy@v1
       with:
         app-name: 'sparkjava'
-        slot-name: 'production'
+        #slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_9572f9b91c86492793a36ece15f45b2f }}
-        package: '${{ github.workspace }}/target/*.jar'
-
-    - task: PublishBuildArtifacts@1
-  inputs:
-    pathToPublish: $(Build.ArtifactStagingDirectory)
-    artifactName: MyBuildOutputs
+        package: target/*.war
